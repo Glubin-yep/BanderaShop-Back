@@ -9,3 +9,8 @@ git clone https://github.com/Glubin-yep/BanderaShop-Back
 ```sh
 npm install
 ```
+
+## Для запуску
+```sh
+npm run dev
+```

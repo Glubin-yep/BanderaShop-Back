@@ -9,13 +9,7 @@ git clone https://github.com/Glubin-yep/BanderaShop-Back
 ```sh
 npm install
 ```
-- Створити файл .env в папці проекту
-- Вписати:
-
-PORT = 5000
-
-DB_URL = mongodb+srv://root:vqeHspiV0k9dThcr@cluster0.qzvyk2d.mongodb.net/?retryWrites=true&w=majority
-
+- Скопіювати файл .env з телеграма в папку проекту
 
 ## Для запуску
 ```sh

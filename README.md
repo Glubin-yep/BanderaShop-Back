@@ -9,3 +9,9 @@ git clone https://github.com/Glubin-yep/BanderaShop-Back
 ```sh
 npm install
 ```
+- Скопіювати файл .env з телеграма в папку проекту
+
+## Для запуску
+```sh
+npm run dev
+```

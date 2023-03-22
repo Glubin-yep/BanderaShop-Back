@@ -10,7 +10,7 @@ class UserController {
             return res.json(userData);
         }
         catch (e) {
-            console.log(e);
+           next(e);
         }
     }
 
@@ -19,7 +19,7 @@ class UserController {
 
         }
         catch (e) {
-
+            next(e);
         }
     }
 
@@ -28,7 +28,7 @@ class UserController {
 
         }
         catch (e) {
-
+            next(e);
         }
     }
 
@@ -39,7 +39,7 @@ class UserController {
             return res.redirect(process.env.CLIENT_URL);
         }
         catch (e) {
-            console.log(e);
+            next(e);
         }
     }
 
@@ -48,7 +48,7 @@ class UserController {
 
         }
         catch (e) {
-
+            next(e);
         }
     }
 
@@ -57,7 +57,7 @@ class UserController {
             res.json(['123', '456']);
         }
         catch (e) {
-
+            next(e);
         }
     }
 }

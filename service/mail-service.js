@@ -17,7 +17,7 @@ class MailService {
         await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
-            subject: 'Активація аккаунта на ' + process.env.SITE_NAME,
+            subject: 'Активація аккаунта на ' + process.env.CLIENT_NAME,
             text:'',
             html:
                 `

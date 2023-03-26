@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(cookieParser(null, {
   cookie: {
     httpOnly: true,
-    secure: true,
+    secure: false,
     sameSite: 'none'
   }
 }));

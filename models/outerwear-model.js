@@ -22,7 +22,7 @@ const outerwearSchema = new Schema({
     required: true
   },
   photo: {
-    type: Buffer, 
+    type: String, 
     required: true
   }
 });

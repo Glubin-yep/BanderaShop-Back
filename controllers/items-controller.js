@@ -38,15 +38,37 @@ class UserController {
         }
     }
 
-    async addProduct(req, res, next){
+    async addProduct(req, res, next) {
         try {
-            const { category, name, shortDescription, fullDescription, price, availableSizes, photo } = req.body;
+            const { category, name, shortDescription, fullDescription, price, availableSizes, photo } = req.body;            
             await productService.addProductToCategory(category, name, shortDescription, fullDescription, price, availableSizes, photo);
             res.status(200).json({ message: 'Product added successfully' });
-          } catch (e) {
+        } catch (e) {
             next(e);
-          }
+        }
     }
+
+    async updateProduct(req, res, next) {
+        try {
+          const { category, name, shortDescription, fullDescription, price, availableSizes, photo } = req.body.name;
+          console.log(req.body)
+          const product = await productService.updateProduct(category, name, shortDescription, fullDescription, price, availableSizes, photo);
+          res.status(200).json({ message: 'Product changed successfully', product });
+        } catch (e) {
+          next(e);
+        }
+      }
+
+      async deleteProductById(req, res, next) {
+        try {
+          const { category, id} = req.body.category;
+          console.log(req.body)
+          const product = await productService.deleteProductById(category, id);
+          res.status(200).json({ message: 'Product deleted successfully', product });
+        } catch (e) {
+          next(e);
+        }
+      }
 }
 
 module.exports = new UserController();

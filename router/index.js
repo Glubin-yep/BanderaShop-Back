@@ -20,5 +20,7 @@ router.get('/getAll', itemController.getAllProducts);
 router.get('/get/:productType/:productName', itemController.getProductByName);
 router.get('/category/:category', itemController.getProductsByCategory);
 router.post('/addProduct', itemController.addProduct);
+router.post('/updateProduct', itemController.updateProduct);
+router.post('/deleteProduct', itemController.deleteProductById);
 
 module.exports = router

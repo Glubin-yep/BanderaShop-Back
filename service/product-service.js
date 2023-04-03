@@ -5,14 +5,21 @@ const Accessory = require('../models/accessory-model');
 
 class ProductService {
   async getAllProducts() {
-    const outerwears = await Outerwears.find({});
-    const underwear = await Underwear.find({});
-    const footwear = await Footwear.find({});
-    const accessories = await Accessory.find({});
-
-    const allProducts = [...outerwears, ...underwear, ...footwear, ...accessories];
+    const outerwears = await Outerwears.find({}).lean().exec();
+    const underwear = await Underwear.find({}).lean().exec();
+    const footwear = await Footwear.find({}).lean().exec();
+    const accessories = await Accessory.find({}).lean().exec();
+  
+    const allProducts = [
+      ...outerwears.map(product => ({ ...product, category: 'outerwears' })),
+      ...underwear.map(product => ({ ...product, category: 'underwear' })),
+      ...footwear.map(product => ({ ...product, category: 'footwear' })),
+      ...accessories.map(product => ({ ...product, category: 'accessory' })),
+    ];
+  
     return allProducts;
   }
+  
 
   async getProductByName(productName, productType) {
     let product;
@@ -106,9 +113,58 @@ class ProductService {
         throw new Error('Invalid category');
     }
     await product.save();
-    
-  return product;
+
+    return product;
+  } 
+
+  async updateProduct(category, name, shortDescription, fullDescription, price, availableSizes, photo) {
+  let product;
+  console.log(category)
+  switch (category) {
+    case 'outerwears':
+      product = await Outerwears.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+      break;
+    case 'underwear':
+      product = await Underwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+      break;
+    case 'footwear':
+      product = await Footwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+      break;
+    case 'accessory':
+      product = await Accessory.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, photo }, { new: true });
+      break;
+    default:
+      throw new Error('Invalid category');
   }
+
+  return product;
+}
+
+async deleteProductById(category, productId) {
+  let product;
+
+  console.log(productId)
+  switch (category) {
+    case 'outerwears':
+      product = await Outerwears.findByIdAndDelete(productId);
+      break;
+    case 'underwear':
+      product = await Underwear.findByIdAndDelete(productId);
+      break;
+    case 'footwear':
+      product = await Footwear.findByIdAndDelete(productId);
+      break;
+    case 'accessory':
+      product = await Accessory.findByIdAndDelete(productId);
+      break;
+    default:
+      throw new Error('Invalid category');
+  }
+
+  return product;
+}
+
+
 }
 
 module.exports = new ProductService();

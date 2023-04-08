@@ -21,21 +21,20 @@ class ProductService {
   }
   
 
-  async getProductByName(productName, productType) {
+  async getProductById(productId, productType) {
     let product;
-
     switch (productType) {
       case 'outerwears':
-        product = await Outerwears.findOne({ name: productName });
+        product = await Outerwears.findOne({ _id: productId });
         break;
       case 'underwear':
-        product = await Underwear.findOne({ name: productName });
+        product = await Underwear.findOne({ _id: productId });
         break;
       case 'footwear':
-        product = await Footwear.findOne({ name: productName });
+        product = await Footwear.findOne({ _id: productId });
         break;
       case 'accessory':
-        product = await Accessory.findOne({ name: productName });
+        product = await Accessory.findOne({ _id: productId });
         break;
       default:
         throw new Error('Invalid product type');

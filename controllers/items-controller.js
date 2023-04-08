@@ -13,10 +13,10 @@ class UserController {
         }
     }
 
-    async getProductByName(req, res, next) {
+    async getProductById(req, res, next) {
         try {
-            const { productType, productName } = req.params;
-            const product = await productService.getProductByName(productName, productType);
+            const { productType, productId } = req.params;
+            const product = await productService.getProductById(productId, productType);
             if (!product) {
                 return res.status(404).json({ message: 'Product not found' });
             }

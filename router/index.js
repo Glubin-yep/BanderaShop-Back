@@ -17,7 +17,7 @@ router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
 
 router.get('/getAll', itemController.getAllProducts);
-router.get('/get/:productType/:productName', itemController.getProductByName);
+router.get('/get/:productType/:productId', itemController.getProductById);
 router.get('/category/:category', itemController.getProductsByCategory);
 router.post('/addProduct', itemController.addProduct);
 router.post('/updateProduct', itemController.updateProduct);

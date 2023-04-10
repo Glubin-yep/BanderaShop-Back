@@ -2,6 +2,7 @@ const Outerwears = require('../models/outerwear-model');
 const Underwear = require('../models/underwear-model');
 const Footwear = require('../models/shoes-model');
 const Accessory = require('../models/accessory-model');
+const ApiError = require('../exceptions/api-error');
 
 class ProductService {
   async getAllProducts() {
@@ -9,17 +10,17 @@ class ProductService {
     const underwear = await Underwear.find({}).lean().exec();
     const footwear = await Footwear.find({}).lean().exec();
     const accessories = await Accessory.find({}).lean().exec();
-  
+
     const allProducts = [
       ...outerwears.map(product => ({ ...product, category: 'outerwears' })),
       ...underwear.map(product => ({ ...product, category: 'underwear' })),
       ...footwear.map(product => ({ ...product, category: 'footwear' })),
       ...accessories.map(product => ({ ...product, category: 'accessory' })),
     ];
-  
+
     return allProducts;
   }
-  
+
 
   async getProductById(productId, productType) {
     let product;
@@ -37,7 +38,7 @@ class ProductService {
         product = await Accessory.findOne({ _id: productId });
         break;
       default:
-        throw new Error('Invalid product type');
+        throw ApiError.BadRequest(`Продуктів за такою category ${productType} не найдено `);
     }
 
     return product;
@@ -60,7 +61,7 @@ class ProductService {
         products = await Accessory.find({});
         break;
       default:
-        throw new Error('Invalid category');
+        throw ApiError.BadRequest(`Продуктів за такою category ${productType} не найдено `);
     }
 
     return products;
@@ -109,61 +110,59 @@ class ProductService {
         });
         break;
       default:
-        throw new Error('Invalid category');
+        throw ApiError.BadRequest(`Продуктів за такою category ${productType} не найдено `);
     }
     await product.save();
 
     return product;
-  } 
+  }
 
   async updateProduct(category, name, shortDescription, fullDescription, price, availableSizes, photo) {
-  let product;
-  console.log(category)
-  switch (category) {
-    case 'outerwears':
-      product = await Outerwears.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
-      break;
-    case 'underwear':
-      product = await Underwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
-      break;
-    case 'footwear':
-      product = await Footwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
-      break;
-    case 'accessory':
-      product = await Accessory.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, photo }, { new: true });
-      break;
-    default:
-      throw new Error('Invalid category');
+    let product;
+    console.log(category)
+    switch (category) {
+      case 'outerwears':
+        product = await Outerwears.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+        break;
+      case 'underwear':
+        product = await Underwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+        break;
+      case 'footwear':
+        product = await Footwear.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, availableSizes, photo }, { new: true });
+        break;
+      case 'accessory':
+        product = await Accessory.findOneAndUpdate({ name }, { shortDescription, fullDescription, price, photo }, { new: true });
+        break;
+      default:
+        throw ApiError.BadRequest(`Продуктів за такою category ${productType} не найдено `);
+    }
+
+    return product;
   }
 
-  return product;
-}
+  async deleteProductById(category, productId) {
+    let product;
 
-async deleteProductById(category, productId) {
-  let product;
+    console.log(productId)
+    switch (category) {
+      case 'outerwears':
+        product = await Outerwears.findByIdAndDelete(productId);
+        break;
+      case 'underwear':
+        product = await Underwear.findByIdAndDelete(productId);
+        break;
+      case 'footwear':
+        product = await Footwear.findByIdAndDelete(productId);
+        break;
+      case 'accessory':
+        product = await Accessory.findByIdAndDelete(productId);
+        break;
+      default:
+        throw ApiError.BadRequest(`Продуктів за такою category ${productType} не найдено `);
+    }
 
-  console.log(productId)
-  switch (category) {
-    case 'outerwears':
-      product = await Outerwears.findByIdAndDelete(productId);
-      break;
-    case 'underwear':
-      product = await Underwear.findByIdAndDelete(productId);
-      break;
-    case 'footwear':
-      product = await Footwear.findByIdAndDelete(productId);
-      break;
-    case 'accessory':
-      product = await Accessory.findByIdAndDelete(productId);
-      break;
-    default:
-      throw new Error('Invalid category');
+    return product;
   }
-
-  return product;
-}
-
-
 }
 
 module.exports = new ProductService();

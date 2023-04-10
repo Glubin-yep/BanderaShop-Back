@@ -5,7 +5,7 @@
 git clone https://github.com/Glubin-yep/BanderaShop-Back
 ```
 
-## При першому засупуску після клонування ОБОВЯЗКОВО!!!
+## При першому засупуску після клонування
 ```sh
 npm install
 ```

@@ -65,7 +65,7 @@ class UserController {
         try {
             const activationLink = req.params.link;
             await userService.activate(activationLink);
-            return res.redirect(process.env.CLIENT_URL);
+            return res.redirect(process.env.CLIENT_URL + `/email-confirmation-success`);
         }
         catch (e) {
             next(e);
@@ -104,7 +104,7 @@ class UserController {
         try {
             const { refreshToken } = req.cookies
             const userDate =  tokenService.validateRefreshToken(refreshToken)
-            
+
             if(userDate.activate != true){
                 return next(ApiError.BadRequest('У користувача не підтверджена пошта'));
             }

@@ -15,6 +15,7 @@ router.post('/logout', userController.logout);
 router.get('/activate/:link', userController.activate);
 router.get('/refresh', userController.refresh);
 router.get('/users', authMiddleware, userController.getUsers);
+router.get('/sendEmail', authMiddleware, userController.sendStatusTransactionOnEmail);
 
 router.get('/getAll', itemController.getAllProducts);
 router.get('/get/:productType/:productId', itemController.getProductById);

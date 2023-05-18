@@ -29,6 +29,20 @@ class MailService {
         })
     }
 
+    async sendStatusTransaction(to, status){
+        await this.transporter.sendMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: status,
+            text:'',
+            html:
+                `
+                    <div>
+                        <h1>Для підтвердження пошти перейдіть по силці </h1>                        
+                    </div>
+                `
+        })
+    }
 }
 
 module.exports = new MailService();

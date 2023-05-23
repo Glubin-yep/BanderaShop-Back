@@ -28,10 +28,10 @@ router.post('/updateProduct', itemController.updateProduct);
 router.post('/deleteProduct', itemController.deleteProductById);
 
 // Order routes
-router.get('/getAllOrders', authMiddleware, orderController.getAllOrders);
-router.get('/getOrder/:orderId', authMiddleware, orderController.getOrderById); 
+router.get('/getAllOrders', orderController.getAllOrders);
+router.get('/getOrder/:orderId', orderController.getOrderById); 
 router.post('/addOrder', authMiddleware, orderController.createOrder);
-router.put('/updateOrder/:orderId', authMiddleware, orderController.updateOrder);
-router.delete('/deleteOrder/:orderId', authMiddleware, orderController.deleteOrder); 
+router.put('/updateOrder/:orderId', orderController.updateOrder);
+router.delete('/deleteOrder/:orderId', orderController.deleteOrder); 
 
 module.exports = router;
